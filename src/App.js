@@ -129,7 +129,7 @@ function App() {
       </table>
     </div>
     <div>
-    <Map coordinates={deliveries} />
+    <Map coordinates={coordinates} />
     </div>
     </>
   );
