@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import Map from './Map';
 
 function App() {
   const [order, setOrder] = useState('');
@@ -12,6 +13,15 @@ function App() {
   const [city, setCity] = useState('');
   const [pinCode, setPinCode] = useState('');
   const [deliveries, setDeliveries] = useState([]);
+  const [coordinates, setCoordinates] = useState([]);
+
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      const response = await axios.get('http://localhost:5000/api/coordinates');
+      setCoordinates(response.data);
+    };
+    fetchCoordinates();
+  }, []);
 
   useEffect(() => {
     async function fetchDeliveries() {
@@ -46,6 +56,7 @@ function App() {
   }
 
   return (
+    <>
     <div className="App">
       <h1>Delivery Form</h1>
       <form onSubmit={handleSubmit}>
@@ -117,6 +128,10 @@ function App() {
         </tbody>
       </table>
     </div>
+    <div>
+    <Map coordinates={deliveries} />
+    </div>
+    </>
   );
 }
 
